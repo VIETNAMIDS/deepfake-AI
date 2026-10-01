@@ -1,0 +1,52 @@
+HƯỚNG DẪN SỬ DỤNG BOT KIỂM CHỨNG VIDEO AI (DEEPCHECK AI)
+==========================================================
+
+I. GIỚI THIỆU
+DeepCheck AI là trợ lý thông minh chuyên phát hiện video Deepfake, video tạo bằng AI (Google Veo, Sora, Kling, Luma, Hailuo) và cảnh báo nguy cơ lừa đảo trên đa nền tảng (Zalo, Telegram, Messenger).
+
+II. CÁCH KHỞI ĐỘNG HỆ THỐNG
+1. Khởi động nhanh toàn bộ dịch vụ:
+   Mở terminal tại thư mục dự án và chạy:
+   npm start
+   (Lệnh này sẽ tự động chạy Python Engine tại cổng 8000 và kết nối các bot Zalo, Telegram, Messenger).
+
+2. Khởi động riêng lẻ từng thành phần (nếu cần):
+   - Chạy Python Forensic Engine: python py/server.py
+   - Chạy riêng Telegram Bot: npm run bot
+   - Chạy riêng Zalo Bot: npx ts-node src/bots/zalo/zaloBot.ts
+
+3. Xử lý khi bị trùng cổng 8000 trên Windows:
+   Chạy lệnh PowerShell:
+   Get-Process python* -ErrorAction SilentlyContinue | Stop-Process -Force
+
+III. CÁCH SỬ DỤNG TRÊN TỪNG NỀN TẢNG
+
+1. TRÊN ZALO BOT:
+- Gửi link video từ TikTok, Facebook, YouTube, CapCut, Twitter/X hoặc link trực tiếp mp4.
+- Bot sẽ gửi thông báo: "đã phát hiện video , vuiii lòng chờ tớ phân tích nhó".
+- Sau vài chục giây phân tích, bot trả về báo cáo kiểm chứng toàn diện với định dạng chữ nhỏ tinh tế (TextStyle.Small).
+- Ngoài kiểm tra video, bạn có thể nhắn tin hỏi đáp bất kỳ về an toàn mạng hoặc thông tin để bot trả lời.
+
+2. TRÊN TELEGRAM BOT:
+- Gửi file video trực tiếp, video dạng tài liệu (Document), hoặc gửi đường link video.
+- Bot sẽ cập nhật trạng thái từng bước: "Đang tải video..." -> "Đang quét Deepfake vi phẫu siêu tốc..." và trả về kết quả.
+- Gõ các câu hỏi văn bản thông thường để trò chuyện và hỏi đáp với trợ lý AI.
+
+3. TRÊN MESSENGER BOT:
+- Tự động nhận link video gửi vào hộp thư Fanpage và trả về kết quả phân tích.
+
+IV. CẤU TRÚC BÁO CÁO KIỂM CHỨNG CHUẨN
+Mỗi video gửi đến sẽ được thẩm định qua 7 phần chuyên sâu:
+1. Mức độ nghi ngờ Deepfake: Điểm số /100, phân tích vi mô khuôn mặt, khẩu hình, vật lý và âm thanh.
+2. Kiểm chứng nội dung: Xác thực lời thoại (Đúng / Sai / Gây hiểu lầm, bóp méo).
+3. Đánh giá nguồn: Điểm tin cậy kênh, tính minh bạch và mục đích đăng tải.
+4. Đánh giá nguy cơ lừa đảo: Phân loại mức độ (Thấp / Trung bình / Cao) kèm cảnh báo cụ thể.
+5. Bảo vệ dữ liệu & Dấu chân số: Cảnh báo rủi ro khi like, share, để lại bình luận.
+6. Kết luận chung: Nhận định bản chất video (giải trí, câu tương tác hay lừa đảo).
+7. Bạn nên làm gì: Các bước khuyến nghị an toàn cho người xem.
+Kèm câu hỏi "Góc phản tư" giúp người xem nâng cao tư duy phản biện khi tiếp cận thông tin mạng.
+
+V. CẤU HÌNH HỆ THỐNG (.env)
+- TELEGRAM_BOT_TOKEN: Token bot Telegram từ @BotFather.
+- ROUTER9_BASE_URL & ROUTER9_API_KEY: Cổng kết nối mô hình Gemini 9Router.
+- PYTHON_ENGINE_URL: Mặc định là http://127.0.0.1:8000.

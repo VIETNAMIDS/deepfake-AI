@@ -1,0 +1,23 @@
+```json
+{
+  "has_face": true,
+  "deepfake_suspicion_score": 96,
+  "suspicion_level": "Rat cao",
+  "technical_anomalies": [
+    "Phat hien watermark 'Veo' goc duoi ben phai",
+    "Nhan 'AI-generated' goc duoi ben trai",
+    "Bien dang cac khop ngon tay va chuyen dong phi tu nhien"
+  ],
+  "synthid_or_ai_watermark": "Phat hien watermark Veo va nhan AI-generated",
+  "audio_visual_sync": "Long tieng",
+  "spoken_transcript": "Khi tôi dịch cabin cho sếp trong lúc phỏng vấn người khác. - Công ty anh tuyển cả những người trẻ không cần kinh nghiệm. - Biết nghe lời là được. - Ưu tiên những bạn đa tài. - Một người làm được việc của ba người nhưng lương 5 triệu. - Ưu tiên những bạn có tinh thần trách nhiệm cao. - Có chuyện gì thì em sẽ là người đứng ra chịu trách nhiệm. - Công ty không bắt nhân viên tăng ca. - Vì tăng ca là điều hiển nhiên, việc làm không hết. - Công ty tổ chức cho nhân viên đi du lịch thường xuyên nếu có thời gian. - Bận từ đầu năm tới cuối năm. - Công ty cho nhân viên áp dụng thời gian làm việc linh hoạt. - Linh hoạt là lúc nào gọi cũng phải có mặt, kể cả 12 giờ đêm. - Mức lương cạnh tranh so với thị trường. - Lương cơ bản 4 triệu 9.",
+  "spoken_claims": [
+    "Tieu chi va thuc te tuyen dung hai huoc tai doanh nghiep"
+  ],
+  "scam_risk_score": 3,
+  "scam_indicators": [
+    "Khong co yeu to lua dao, chi mang tinh giai tri"
+  ],
+  "expert_opinion": "Hinh anh va chuyen dong duoc tao sinh bang mo hinh Google Veo (xac thuc qua watermark Veo va nhan AI-generated). Am thanh duoc thu am va long ghep doc lap cho muc dich giai tri, khong phai lua dao."
+}
+```

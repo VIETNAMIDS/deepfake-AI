@@ -1,0 +1,26 @@
+{
+  "name": "deepcheck-ai",
+  "version": "1.0.0",
+  "description": "DeepCheck AI - Forensic & Verification Bot",
+  "main": "dist/runner.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/runner.ts",
+    "bot": "ts-node src/telegram_bot.ts",
+    "py:server": "python py/server.py"
+  },
+  "dependencies": {
+    "@types/qrcode-terminal": "^0.12.2",
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "form-data": "^4.0.1",
+    "grammy": "^1.34.0",
+    "qrcode-terminal": "^0.12.0",
+    "zca-js": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}

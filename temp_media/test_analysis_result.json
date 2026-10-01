@@ -1,0 +1,20 @@
+{
+  "has_face": true,
+  "deepfake_suspicion_score": 32,
+  "suspicion_level": "Thap",
+  "technical_anomalies": [
+    "Hieu ung do hoa hoat hoa dau video",
+    "Nhan AI-generated hien thi goc duoi ben trai"
+  ],
+  "synthid_or_ai_watermark": "Phat hien nhan AI-generated",
+  "audio_visual_sync": "Khop tu nhien",
+  "spoken_transcript": "Doan hoi thoai hai huoc giua nguoi phong van va phien dich cabin: tuyen nguoi tre biet nghe loi, da tai luong 5 trieu, trach nhiem cao, tang ca thuong xuyen, lam viec linh hoat 24/7 voi muc luong co ban 4 trieu 9.",
+  "spoken_claims": [
+    "Tieu chi tuyen dung thuc te va loi giai nghia cham biem ve cong viec van phong"
+  ],
+  "scam_risk_score": 3,
+  "scam_indicators": [
+    "Khong co dau hieu lua dao tai chinh hay mao danh"
+  ],
+  "expert_opinion": "Video thuc te do nguoi that dien xuat theo kich ban giai tri. Cac dac diem giai phau, bieu cam va khau hinh hoan toan tu nhien. Nhan AI-generated xuat hien co the do kenh gan the hoac su dung hieu ung do hoa AI o giay dau."
+}

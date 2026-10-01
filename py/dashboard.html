@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeepCheck AI - NCKH Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen p-4 md:p-8 font-sans">
+  <div class="max-w-7xl mx-auto space-y-6">
+    <header class="border-b border-slate-800 pb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">DEEPCHECK AI – NCKH THỐNG KÊ</h1>
+        <p class="text-xs text-slate-400">Nghiên cứu nghịch lý lòng tin & khả năng kiểm chứng thông tin của học sinh THPT</p>
+      </div>
+      <span class="px-3 py-1 text-xs rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 animate-pulse">● Hệ thống Trực tuyến</span>
+    </header>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+        <p class="text-xs text-slate-400">Tổng học sinh</p>
+        <h2 id="totalUsers" class="text-2xl font-bold text-white mt-1">0</h2>
+      </div>
+      <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+        <p class="text-xs text-slate-400">Lượt kiểm tra</p>
+        <h2 id="totalChecks" class="text-2xl font-bold text-cyan-400 mt-1">0</h2>
+      </div>
+      <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+        <p class="text-xs text-slate-400">Phát hiện AI (>=60%)</p>
+        <h2 id="aiCount" class="text-2xl font-bold text-rose-400 mt-1">0</h2>
+      </div>
+      <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+        <p class="text-xs text-slate-400">Video Người thật (<60%)</p>
+        <h2 id="realCount" class="text-2xl font-bold text-emerald-400 mt-1">0</h2>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+        <h3 class="text-sm font-semibold text-slate-200 mb-4">Tỉ lệ Thật / Giả</h3>
+        <div class="h-48 flex items-center justify-center"><canvas id="pieChart"></canvas></div>
+      </div>
+      <div class="md:col-span-2 bg-slate-900 border border-slate-800 p-4 rounded-xl">
+        <h3 class="text-sm font-semibold text-slate-200 mb-4">Nhật ký thẩm định thời gian thực</h3>
+        <div class="overflow-x-auto max-h-48 overflow-y-auto">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="text-slate-500 border-b border-slate-800 uppercase">
+              <tr><th class="pb-2">Thời gian</th><th class="pb-2">Loại</th><th class="pb-2">Nội dung</th><th class="pb-2">Kết quả</th></tr>
+            </thead>
+            <tbody id="logsTable" class="divide-y divide-slate-800/60"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    async function loadStats() {
+      const res = await fetch('/dashboard/stats');
+      const data = await res.json();
+      document.getElementById('totalUsers').innerText = data.totalUsers;
+      document.getElementById('totalChecks').innerText = data.totalChecks;
+      document.getElementById('aiCount').innerText = data.aiCount;
+      document.getElementById('realCount').innerText = data.realCount;
+      const tbody = document.getElementById('logsTable');
+      tbody.innerHTML = (data.recentLogs || []).map(l => `
+        <tr class="hover:bg-slate-800/40">
+          <td class="py-2 text-slate-400">${new Date(l.timestamp).toLocaleTimeString()}</td>
+          <td class="py-2"><span class="px-2 py-0.5 rounded text-[10px] ${l.type === 'video' ? 'bg-cyan-500/20 text-cyan-300' : 'bg-purple-500/20 text-purple-300'}">${l.type}</span></td>
+          <td class="py-2 truncate max-w-[150px]">${l.input}</td>
+          <td class="py-2 truncate max-w-[200px] text-slate-400">${(l.verdict || '').slice(0, 35)}...</td>
+        </tr>
+      `).join('');
+      if (!window.chartInstance) {
+        const ctx = document.getElementById('pieChart').getContext('2d');
+        window.chartInstance = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['AI / Deepfake', 'Real'],
+            datasets: [{ data: [data.aiCount || 0, data.realCount || 0], backgroundColor: ['#f43f5e', '#10b981'], borderWidth: 0 }]
+          },
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } } }
+        });
+      } else {
+        window.chartInstance.data.datasets[0].data = [data.aiCount, data.realCount];
+        window.chartInstance.update();
+      }
+    }
+    loadStats();
+    setInterval(loadStats, 5000);
+  </script>
+</body>
+</html>
